@@ -1,0 +1,20 @@
+.update {
+  margin: 20px auto 0 auto;
+  background-color: #f6d518;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  column-gap: 15px;
+  width: max-content;
+  border-radius: 6px;
+  color: black;
+  font-size: 18px;
+  font-weight: 600;
+  position: relative;
+  cursor: pointer;
+  transition: opacity 0.6s ease-in;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
