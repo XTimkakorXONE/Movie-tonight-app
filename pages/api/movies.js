@@ -1,4 +1,4 @@
-import { request } from "../../utils/commonUrl";
+import { request } from "../../utils/common";
 
 export default async function handler(req, res) {
   try {

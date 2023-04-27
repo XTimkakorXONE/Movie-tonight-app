@@ -5,6 +5,7 @@ import styles from "../styles/Home.module.scss";
 import { BASE_URL } from "../utils/constants";
 import { useAppStore } from "../store/store";
 import { useEffect } from "react";
+import Head from "next/head";
 
 export default function App({ Component, pageProps }) {
   const { setItems, items } = useAppStore();
@@ -23,6 +24,10 @@ export default function App({ Component, pageProps }) {
 
   return (
     <div className={styles.container}>
+      <Head>
+        <title>Movie-App</title>
+      </Head>
+
       <main className={styles.main}>
         <Component {...pageProps} />
 

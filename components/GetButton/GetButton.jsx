@@ -4,16 +4,23 @@ import styles from "./GetButton.module.scss";
 import { useAppStore } from "../../store/store";
 import { useRouter } from "next/router";
 import { BASE_URL } from "../../utils/constants";
-import { getIdFromKey } from "../../utils/commonUrl";
+import { getIdFromKey, getRandom } from "../../utils/common";
 
 export const GetButton = ({ text = "Get a movie", cn = styles.update }) => {
   const { items } = useAppStore();
   const router = useRouter();
+  const { id } = router.query;
 
   const getMovie = () => {
     if (!items?.length) return;
 
-    router.push(`${BASE_URL}${getIdFromKey(items[0])}`);
+    const filtered = items.filter((item) => getIdFromKey(item) !== id);
+
+    const random = getRandom(filtered.length);
+
+    if (filtered.length) {
+      router.push(`${BASE_URL}${getIdFromKey(filtered[random])}`);
+    }
   };
 
   return (

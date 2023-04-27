@@ -2,17 +2,17 @@ import { request } from "../../utils/common";
 
 export default async function handler(req, res) {
   try {
-    const { id } = req.query;
+    const { type } = req.query;
 
-    const data = await request({
-      url: `title/get-overview-details`,
+    const { data } = await request({
+      url: `title/v2/get-popular-movies-by-genre`,
       params: {
-        tconst: id,
+        genre: type,
       },
     });
     if (data) res.status(200).json(data);
   } catch (err) {
     console.log(err);
-    res.status(500).json(`Error during fetching movie`);
+    res.status(500).json(`Error during fetching movies`);
   }
 }

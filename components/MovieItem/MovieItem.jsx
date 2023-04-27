@@ -3,9 +3,17 @@ import React from "react";
 
 import styles from "./MovieItem.module.scss";
 import movieImg from "../../assets/images/default-movie.jpg";
-import { convertDuration } from "../../utils/commonUrl";
+import { convertDuration, getIdFromKey, getRandom } from "../../utils/common";
+import Cast from "../Cast/Cast";
+import Reviews from "../Reviews/Reviews";
+import { GetButton } from "../GetButton/GetButton";
+import { BASE_URL } from "../../utils/constants";
+import { useRouter } from "next/router";
+import { useAppStore } from "../../store/store";
+import axios from "axios";
 
 export const MovieItem = ({
+  id,
   title: { title, image, year, runningTimeInMinutes: duration },
   ratings: { rating },
   plotSummary: plot,
@@ -13,6 +21,19 @@ export const MovieItem = ({
   genres,
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const router = useRouter();
+  const { setItems } = useAppStore();
+
+  const getByGenre = async (genre) => {
+    const type = genre.replaceAll(" ", "-").toLowerCase();
+    const { data } = await axios.get(`${BASE_URL}/api/genres?type=${type}`);
+
+    const random = getRandom(data.length);
+    const id = getIdFromKey(data[random]);
+    router.push(`${BASE_URL}/${id}`);
+
+    setItems({ data });
+  };
 
   return (
     <div className={styles.movie}>
@@ -31,7 +52,7 @@ export const MovieItem = ({
             src={image ? image.url : movieImg}
             alt={title}
             width={image ? image.width : "300"}
-            height={image ? image.height / 2 : "300"}
+            height={550}
             quality="0.5"
           />
         </div>
@@ -48,7 +69,11 @@ export const MovieItem = ({
 
           <div className={styles.genres}>
             {genres.map((genre) => (
-              <div key={genre} className={styles.genre} onClick={() => {}}>
+              <div
+                key={genre}
+                className={styles.genre}
+                onClick={() => getByGenre(genre)}
+              >
                 {genre}
               </div>
             ))}
@@ -58,8 +83,8 @@ export const MovieItem = ({
 
       {isOpen && (
         <>
-          <div>Desc1</div>
-          <div>Desc2</div>
+          <Cast id={id} />
+          <Reviews id={id} />
         </>
       )}
 

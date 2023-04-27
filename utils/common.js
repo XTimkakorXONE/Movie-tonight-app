@@ -25,3 +25,5 @@ export const convertDuration = (total) => {
 
   return `${hours}:${minutes}`;
 };
+
+export const getRandom = (max) => Math.floor(Math.random() * max);
