@@ -3,6 +3,7 @@ import { BASE_URL } from "../utils/constants";
 import { MovieItem } from "../components/MovieItem/MovieItem";
 import Head from "next/head";
 import { GetButton } from "../components/GetButton/GetButton";
+import styles from "../components/GetButton/GetButton.module.scss";
 
 export default function Movie({ movie }) {
   return (
@@ -10,7 +11,7 @@ export default function Movie({ movie }) {
       <Head>
         <title>{movie.title.title}</title>
       </Head>
-      <GetButton />
+      <GetButton text="Home" cn={styles.update} />
       <MovieItem {...movie} />
     </>
   );

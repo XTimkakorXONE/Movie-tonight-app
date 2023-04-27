@@ -20,17 +20,23 @@ export const MovieItem = ({
   plotOutline: shortPlot,
   genres,
 }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
   const router = useRouter();
+  const [isOpen, setOpen] = React.useState(false);
   const { setItems } = useAppStore();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const getByGenre = async (genre) => {
-    const type = genre.replaceAll(" ", "-").toLowerCase();
-    const { data } = await axios.get(`${BASE_URL}/api/genres?type=${type}`);
+    if (isLoading) return;
 
+    setIsLoading(true);
+
+    const type = genre.replaceAll(" ", "-").toLowerCase();
+    const { data } = await axios.get(`${BASE_URL}/api/genres?genre=${type}`);
+    console.log({ data });
     const random = getRandom(data.length);
     const id = getIdFromKey(data[random]);
-    router.push(`${BASE_URL}/${id}`);
+
+    router.push(`${BASE_URL}/${id}`).then(() => setIsLoading(false));
 
     setItems({ data });
   };
@@ -52,7 +58,7 @@ export const MovieItem = ({
             src={image ? image.url : movieImg}
             alt={title}
             width={image ? image.width : "300"}
-            height={550}
+            height={530}
             quality="0.5"
           />
         </div>
@@ -88,7 +94,7 @@ export const MovieItem = ({
         </>
       )}
 
-      <div className={styles.more} onClick={() => setIsOpen(!isOpen)}>
+      <div className={styles.more} onClick={() => setOpen(!isOpen)}>
         {isOpen ? "Hide info" : "View more info"}
       </div>
     </div>

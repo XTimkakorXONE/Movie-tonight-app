@@ -3,6 +3,7 @@ import { BASE_URL } from "../../utils/constants";
 import { getIdFromKey } from "../../utils/common";
 import axios from "axios";
 import styles from "./Reviews.module.scss";
+import Loader from "../Loader/Loader";
 
 const Reviews = ({ id }) => {
   const [reviews, setReviews] = useState([]);
@@ -24,6 +25,7 @@ const Reviews = ({ id }) => {
     return (
       <div style={{ marginTop: 100, fontSize: 25, textAlign: "center" }}>
         Reviews Loading ...
+        <Loader />
       </div>
     );
   }

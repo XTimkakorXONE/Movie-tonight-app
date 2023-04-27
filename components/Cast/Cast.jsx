@@ -5,6 +5,7 @@ import { getIdFromKey } from "../../utils/common";
 import Link from "next/link";
 import { BASE_URL } from "../../utils/constants";
 import axios from "axios";
+import Loader from "../Loader/Loader";
 
 const Cast = ({ id }) => {
   const [cast, setCast] = useState([]);
@@ -26,6 +27,7 @@ const Cast = ({ id }) => {
     return (
       <div style={{ marginTop: 100, fontSize: 25, textAlign: "center" }}>
         One second...
+        <Loader />
       </div>
     );
   }

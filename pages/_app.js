@@ -8,19 +8,11 @@ import { useEffect } from "react";
 import Head from "next/head";
 
 export default function App({ Component, pageProps }) {
-  const { setItems, items } = useAppStore();
+  const { setItems, items = [] } = useAppStore();
 
   useEffect(() => {
     if (!items?.length) setItems(pageProps.data);
   }, [pageProps.data, items, setItems]);
-
-  App.getInitialProps = async ({ Component }) => {
-    const pageProps = Component.getInitialProps;
-
-    const { data } = await axios.get(`${BASE_URL}/api/movies`);
-
-    return { pageProps: { ...pageProps, data } };
-  };
 
   return (
     <div className={styles.container}>
@@ -36,3 +28,11 @@ export default function App({ Component, pageProps }) {
     </div>
   );
 }
+
+App.getInitialProps = async ({ Component }) => {
+  const pageProps = Component.getInitialProps;
+
+  const { data } = await axios.get(`${BASE_URL}/api/movies`);
+
+  return { pageProps: { ...pageProps, data } };
+};
