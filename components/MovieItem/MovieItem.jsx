@@ -6,7 +6,6 @@ import movieImg from "../../assets/images/default-movie.jpg";
 import { convertDuration, getIdFromKey, getRandom } from "../../utils/common";
 import Cast from "../Cast/Cast";
 import Reviews from "../Reviews/Reviews";
-import { GetButton } from "../GetButton/GetButton";
 import { BASE_URL } from "../../utils/constants";
 import { useRouter } from "next/router";
 import { useAppStore } from "../../store/store";
@@ -32,7 +31,6 @@ export const MovieItem = ({
 
     const type = genre.replaceAll(" ", "-").toLowerCase();
     const { data } = await axios.get(`${BASE_URL}/api/genres?genre=${type}`);
-    console.log({ data });
     const random = getRandom(data.length);
     const id = getIdFromKey(data[random]);
 

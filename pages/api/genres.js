@@ -10,9 +10,9 @@ export default async function handler(req, res) {
       },
     });
 
-    if (data) res.status(200).json(data);
+    if (data) return res.status(200).json(data);
   } catch (err) {
     console.log(err);
-    res.status(500).json(`Error during fetching movies`);
+    return res.status(500).end().json(`Error during fetching movies`);
   }
 }
